@@ -16,6 +16,7 @@ public class Commands implements CommandExecutor {
 
     private final Main main;
 
+    // Registers the primary /fly command - /flight is registered as an alias in the plugin.yml
     public Commands(final Main main) {
         this.main = main;
         main.getCommand("fly").setExecutor((CommandExecutor) this);
@@ -66,18 +67,22 @@ public class Commands implements CommandExecutor {
                             // If the provided player couldn't be fetched
                             if (otherPlayer == null) {
 
+                                // Converts the config message, to a formated chat message
                                 String playerNotFoundRaw = main.getSettings().getProperty(Config.MESSAGES_PLAYER_NOT_FOUND).replace("{username}", args[1]);
                                 String playerNotFound = ChatColor.translateAlternateColorCodes('&', playerNotFoundRaw);
-
+                                
+                                // Sends the converted message to the player
                                 commandSender.sendMessage(playerNotFound);
                             }
 
                             // If the provided player was fetched successfully
                             else {
 
+                                // Converts the config message, to a formated chat message
                                 String flightStateRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_STATE).replace("{state}", String.valueOf(otherPlayer.getAllowFlight())).replace("{player}", args[1]);
                                 String flightState = ChatColor.translateAlternateColorCodes('&', flightStateRaw);
-
+                                
+                                // Sends the converted message to the player
                                 commandSender.sendMessage(flightState);
 
                             }
@@ -86,19 +91,23 @@ public class Commands implements CommandExecutor {
 
                         else {
 
+                            // Converts the config message, to a formated chat message
                             String playerNameRequiredRaw = main.getSettings().getProperty(Config.MESSAGES_PLAYER_NAME_REQUIRED);
                             String playerNameRequired = ChatColor.translateAlternateColorCodes('&', playerNameRequiredRaw);
-
+                            
+                            // Sends the converted message to the player
                             commandSender.sendMessage(playerNameRequired);
 
                         }
                     }
 
                     else {
-
+                        
+                        // Converts the config message, to a formated chat message
                         String noPermissionRaw = main.getSettings().getProperty(Config.MESSAGES_NO_PERMISSION);
                         String noPermission = ChatColor.translateAlternateColorCodes('&', noPermissionRaw);
 
+                        // Sends the converted message to the player
                         commandSender.sendMessage(noPermission);
                     }
 
@@ -115,10 +124,12 @@ public class Commands implements CommandExecutor {
 
                             // Enables command sender's flight
                             commandSender.setAllowFlight(true);
-
+                            
+                            // Converts the config message, to a formated chat message
                             String flightEnabledRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED);
                             String flightEnabled = ChatColor.translateAlternateColorCodes('&', flightEnabledRaw);
 
+                             // Sends the converted message to the player
                             commandSender.sendMessage(flightEnabled);
                         }
 
@@ -127,10 +138,12 @@ public class Commands implements CommandExecutor {
 
                             // Disables command sender's flight
                             commandSender.setAllowFlight(false);
-
+                            
+                            // Converts the config message, to a formated chat message
                             String flightDisabledRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED);
                             String flightDisabled = ChatColor.translateAlternateColorCodes('&', flightDisabledRaw);
-
+                            
+                            // Sends the converted message to the player
                             commandSender.sendMessage(flightDisabled);
                         }
 
@@ -145,18 +158,22 @@ public class Commands implements CommandExecutor {
                         // If the provided player couldn't be fetched
                         if (otherPlayer == null) {
 
+                            // Converts the config message, to a formated chat message
                             String playerNotFoundRaw = main.getSettings().getProperty(Config.MESSAGES_PLAYER_NOT_FOUND).replace("{username}", args[1]);
                             String playerNotFound = ChatColor.translateAlternateColorCodes('&', playerNotFoundRaw);
-
+                            
+                            // Sends the converted message to the player
                             commandSender.sendMessage(playerNotFound);
                         }
 
                         // If the player is exempt from flight toggle
                         else if(otherPlayer.hasPermission("flight.toggle-exempt")) {
 
+                            // Converts the config message, to a formated chat message
                             String exemptUserRaw = main.getSettings().getProperty(Config.MESSAGES_PLAYER_EXEMPT).replace("{player}", args[1]);
                             String exemptUser = ChatColor.translateAlternateColorCodes('&', exemptUserRaw);
 
+                            // Sends the converted message to the player
                             commandSender.sendMessage(exemptUser);
 
                         }
@@ -170,7 +187,7 @@ public class Commands implements CommandExecutor {
                                 // Enables provided player's flight
                                 otherPlayer.setAllowFlight(true);
 
-                                // If the amount of supplied arguments is greater than 1
+                                // If the amount of supplied arguments is greater than 1 (Slient possiblity)
                                 if(args.length >= 3) {
 
                                     // If the 3rd argument is "-s" (For silent flight toggle)
@@ -178,32 +195,38 @@ public class Commands implements CommandExecutor {
                                         // Don't notify player
                                     }
 
-                                    // If the 2nd argument isn't "-s"
+                                    // If the 2nd argument isn't "-s" (Not silent)
                                     else {
 
                                         // Notify target player
+                                        // Converts the config message, to a formated chat message
                                         String flightEnabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_EXTERNAL).replace("{other}", commandSender.getName());
                                         String flightEnabledExternal = ChatColor.translateAlternateColorCodes('&', flightEnabledExternalRaw);
-
+                                        
+                                        // Sends the converted message to the player
                                         otherPlayer.sendMessage(flightEnabledExternal);
                                     }
                                 }
 
-                                // If there is no 3rd argument
+                                // If there is no 3rd argument (not silent)
                                 else {
 
                                     // Notify target Player
+                                    // Converts the config message, to a formated chat message
                                     String flightEnabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_EXTERNAL).replace("{other}", commandSender.getName());
                                     String flightEnabledExternal = ChatColor.translateAlternateColorCodes('&', flightEnabledExternalRaw);
-
+                                    
+                                    // Sends the converted message to the player
                                     otherPlayer.sendMessage(flightEnabledExternal);
 
                                 }
 
                                 // Notify command sender
+                                // Converts the config message, to a formated chat message
                                 String flightEnabledOtherRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_OTHER).replace("{player}", otherPlayer.getName());
                                 String flightEnabledOther = ChatColor.translateAlternateColorCodes('&', flightEnabledOtherRaw);
-
+                                
+                                // Sends the converted message to the player
                                 commandSender.sendMessage(flightEnabledOther);
                             }
 
@@ -222,9 +245,11 @@ public class Commands implements CommandExecutor {
                                     else {
 
                                         // Notify target player
+                                        // Converts the config message, to a formated chat message
                                         String flightDisabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_EXTERNAL).replace("{other}", commandSender.getName());
                                         String flightDisabledExternal = ChatColor.translateAlternateColorCodes('&', flightDisabledExternalRaw);
 
+                                        // Sends the converted message to the player
                                         otherPlayer.sendMessage(flightDisabledExternal);
                                     }
                                 }
@@ -233,17 +258,21 @@ public class Commands implements CommandExecutor {
                                 else {
 
                                     // Notify target player
+                                    // Converts the config message, to a formated chat message
                                     String flightDisabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_EXTERNAL).replace("{other}", commandSender.getName());
                                     String flightDisabledExternal = ChatColor.translateAlternateColorCodes('&', flightDisabledExternalRaw);
 
+                                    // Sends the converted message to the player
                                     otherPlayer.sendMessage(flightDisabledExternal);
 
                                 }
 
                                 // Notify command sender
+                                // Converts the config message, to a formated chat message
                                 String flightDisabledOtherRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_OTHER).replace("{player}", otherPlayer.getName());
                                 String flightDisabledOther = ChatColor.translateAlternateColorCodes('&', flightDisabledOtherRaw);
-
+                                
+                                // Sends the converted message to the player
                                 commandSender.sendMessage(flightDisabledOther);
                             }
                         }
@@ -256,10 +285,12 @@ public class Commands implements CommandExecutor {
 
                     // If the command sender has flight enabled
                     if (commandSender.getAllowFlight() == true) {
-
+                        
+                        // Converts the config message, to a formated chat message
                         String flightAlreadyEnabledRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ALREADY_ENABLED);
                         String flightAlreadyEnabled = ChatColor.translateAlternateColorCodes('&', flightAlreadyEnabledRaw);
-
+                        
+                        // Sends the converted message to the player
                         commandSender.sendMessage(flightAlreadyEnabled);
                     }
 
@@ -268,9 +299,11 @@ public class Commands implements CommandExecutor {
                         // Enables the command sender's flight
                         commandSender.setAllowFlight(true);
 
+                        // Converts the config message, to a formated chat message
                         String flightEnabledRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED);
                         String flightEnabled = ChatColor.translateAlternateColorCodes('&', flightEnabledRaw);
 
+                        // Sends the converted message to the player
                         commandSender.sendMessage(flightEnabled);
                     }
                 }
@@ -280,10 +313,12 @@ public class Commands implements CommandExecutor {
 
                     // If the command sender has flight disabled
                     if (commandSender.getAllowFlight() == false) {
-
+                        
+                        // Converts the config message, to a formated chat message
                         String flightAlreadyDisabledRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ALREADY_DISABLED);
                         String flightAlreadyDisabled = ChatColor.translateAlternateColorCodes('&', flightAlreadyDisabledRaw);
 
+                        // Sends the converted message to the player
                         commandSender.sendMessage(flightAlreadyDisabled);
                     }
 
@@ -292,42 +327,55 @@ public class Commands implements CommandExecutor {
                         // Disables the command sender's flight
                         commandSender.setAllowFlight(false);
 
+                        // Converts the config message, to a formated chat message
                         String flightDisabledRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED);
                         String flightDisabled = ChatColor.translateAlternateColorCodes('&', flightDisabledRaw);
 
+                        // Sends the converted message to the player
                         commandSender.sendMessage(flightDisabled);
                     }
                 }
 
+                // If the 1st supplied argument is "reload" or "rl" (Ignoring case)
                 else if(args[0].toLowerCase().equals("reload") || args[0].toLowerCase().equals("rl")) {
 
+                    // Checks if the player has the permission node "flight.reload"
                     if(commandSender.hasPermission("flight.reload")) {
-
+                        
+                        // Fetches updated configurate (updates the cached config)
                         main.getSettings().reload();
 
+                        // Converts the config message, to a formated chat message
                         String configReloadedRaw = main.getSettings().getProperty(Config.MESSAGES_CONFIG_RELOADED);
                         String configReloaded = ChatColor.translateAlternateColorCodes('&', configReloadedRaw);
 
+                        // Sends the converted message to the player
                         commandSender.sendMessage(configReloaded);
 
                     }
-
+                    
+                    // If the command sender doesn't have the permission node "flight.reload"
                     else {
 
+                        // Converts the config message, to a formated chat message
                         String noPermissionRaw = main.getSettings().getProperty(Config.MESSAGES_NO_PERMISSION);
                         String noPermission = ChatColor.translateAlternateColorCodes('&', noPermissionRaw);
 
+                        // Sends the converted message to the player
                         commandSender.sendMessage(noPermission);
 
                     }
 
                 }
-
+                
+                // If the 1st supplied argument is invalid
                 else {
 
+                    // Converts the config message, to a formated chat message
                     String unknownCommandRaw = main.getSettings().getProperty(Config.MESSAGES_UNKNOWN_COMMAND);
                     String unknownCommand = ChatColor.translateAlternateColorCodes('&', unknownCommandRaw);
 
+                    // Sends the converted message to the player
                     commandSender.sendMessage(unknownCommand);
 
                 }
@@ -336,9 +384,11 @@ public class Commands implements CommandExecutor {
             // If command sender doesn't have the permission node "flight.use"
             else {
 
+                // Converts the config message, to a formated chat message
                 String noPermissionRaw = main.getSettings().getProperty(Config.MESSAGES_NO_PERMISSION);
                 String noPermission = ChatColor.translateAlternateColorCodes('&', noPermissionRaw);
 
+                // Sends the converted message to the player
                 commandSender.sendMessage(noPermission);
             }
         }
