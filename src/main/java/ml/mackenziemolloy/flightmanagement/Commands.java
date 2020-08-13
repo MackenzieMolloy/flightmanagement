@@ -33,8 +33,6 @@ public class Commands implements CommandExecutor {
             // Casts the command sender to a player
             Player commandSender = (Player) sender;
 
-            commandSender.setFoodLevel(10);
-
             // If no arguments are supplied with the sent command
             if (args.length <= 0) {
                 List<String> invalidArgsRaw = main.getSettings().getProperty(Config.MESSAGES_HELP);
