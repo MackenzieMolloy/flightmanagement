@@ -14,6 +14,7 @@ import static org.bukkit.Bukkit.getServer;
 
 public class Commands implements CommandExecutor {
 
+    // Makes main class getters/setters accessible
     private final Main main;
 
     // Registers the primary /fly command - /flight is registered as an alias in the plugin.yml
@@ -394,9 +395,13 @@ public class Commands implements CommandExecutor {
         // If command sender is console
         else {
 
+            // Casts console to console command sender
             ConsoleCommandSender console = getServer().getConsoleSender();
 
+            // If there were no supplied arguments
             if (args.length <= 0) {
+                
+                // Processes the confgured help message to 1 string/chat message
                 List<String> invalidArgsRaw = main.getSettings().getProperty(Config.MESSAGES_HELP);
                 String msg = "\n";
 
