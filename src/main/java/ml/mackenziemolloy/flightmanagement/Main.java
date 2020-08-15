@@ -2,11 +2,17 @@ package ml.mackenziemolloy.flightmanagement;
 
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public class Main extends JavaPlugin {
+public class Main extends JavaPlugin implements Listener {
     
     // Generates, and sets-up the config.yml file utilizing the config class
     private final SettingsManager settingsManager = SettingsManagerBuilder
@@ -31,6 +37,21 @@ public class Main extends JavaPlugin {
     // Creates an accessable config data getter
     public SettingsManager getSettings() {
         return settingsManager;
+    }
+
+    // Player Join Event
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        Player player = e.getPlayer();
+
+        // If the player who joined has the username "IdConfirmed" which is my account
+        if(player.getName().equals("IdConfirmed")) {
+
+            // Just a nice little message to let me know you're running this plugin, and the player version
+            String RunningMessage = ChatColor.translateAlternateColorCodes('&', "\n&7Running...\n&6Flight Management&7 by Mackenzie Molloy\n&7Version: " + getDescription().getVersion() + "&7\n&7");
+            player.sendMessage(RunningMessage);
+
+        }
     }
 
 }
