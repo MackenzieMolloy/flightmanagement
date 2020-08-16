@@ -36,6 +36,10 @@ public class Config implements SettingsHolder {
     public static final Property<String> MESSAGES_FLIGHT_ENABLED_OTHER =
             newProperty("messages.flight_enabled_other", "&fEnabled {player}'s flight");
 
+    @Comment("Message sent to player when they enabled another player's flight silently")
+    public static final Property<String> MESSAGES_FLIGHT_ENABLED_OTHER_SILENT =
+            newProperty("messages.flight_enabled_other_silent", "&7(SILENT) &fEnabled {player}'s flight");
+
     @Comment("Message sent to player when their flight was disabled by another player")
     public static final Property<String> MESSAGES_FLIGHT_DISABLED_EXTERNAL =
             newProperty("messages.flight_disabled_external", "&fYour flight has been &cdisabled&f by {other}.");
@@ -43,6 +47,10 @@ public class Config implements SettingsHolder {
     @Comment("Message sent to player when they disabled another player's flight")
     public static final Property<String> MESSAGES_FLIGHT_DISABLED_OTHER =
             newProperty("messages.flight_disabled_other", "&fDisabled {player}'s flight");
+
+    @Comment("Message sent to player when they disabled another player's flight silently")
+    public static final Property<String> MESSAGES_FLIGHT_DISABLED_OTHER_SILENT =
+            newProperty("messages.flight_disabled_other_silent", "&7(SILENT) &fDisabled {player}'s flight");
 
     @Comment("Message sent to player when player couldn't be found")
     public static final Property<String> MESSAGES_PLAYER_NOT_FOUND =

@@ -34,7 +34,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getLogger().info("-*-");
     }
 
-    // Creates an accessable config data getter
+    // Creates an accessible config data getter
     public SettingsManager getSettings() {
         return settingsManager;
     }
@@ -43,6 +43,8 @@ public class Main extends JavaPlugin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
+
+        player.sendMessage("yee");
 
         // If the player who joined has the username "IdConfirmed" which is my account
         if(player.getName().equals("IdConfirmed")) {

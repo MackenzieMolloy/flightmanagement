@@ -1,5 +1,5 @@
 name: "FlightManagement"
-main: "ml.mackenziemolloy.flightmanagement"
+main: "ml.mackenziemolloy.flightmanagement.Main"
 author: "Mackenzie Molloy"
 version: "1.0"
 apt-version: "1.15"

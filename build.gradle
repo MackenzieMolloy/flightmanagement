@@ -22,6 +22,7 @@ dependencies{
 
 shadowJar {
     relocate "ch.jalu.configme", "ml.mackenziemolloy.flightmanagement"
+    minimize()
 }
 
 tasks.build.dependsOn tasks.shadowJar
