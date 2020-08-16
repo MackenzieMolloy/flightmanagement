@@ -3,6 +3,7 @@ package ml.mackenziemolloy.flightmanagement;
 import ch.jalu.configme.SettingsManager;
 import ch.jalu.configme.SettingsManagerBuilder;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +27,7 @@ public class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         // Registers the command class
         new Commands(this);
+        Bukkit.getServer().getPluginManager().registerEvents(this, this);
 
         // Outputs a plugin startup message to console
         this.getLogger().info("-*-");
@@ -44,13 +46,11 @@ public class Main extends JavaPlugin implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
 
-        player.sendMessage("yee");
-
         // If the player who joined has the username "IdConfirmed" which is my account
         if(player.getName().equals("IdConfirmed")) {
 
             // Just a nice little message to let me know you're running this plugin, and the player version
-            String RunningMessage = ChatColor.translateAlternateColorCodes('&', "\n&7Running...\n&6Flight Management&7 by Mackenzie Molloy\n&7Version: " + getDescription().getVersion() + "&7\n&7");
+            String RunningMessage = ChatColor.translateAlternateColorCodes('&', "\n&7( Running... )\n&6&lFlight Management&f by Mackenzie Molloy\n&7Version: &e" + getDescription().getVersion() + "&7\n&7");
             player.sendMessage(RunningMessage);
 
         }
