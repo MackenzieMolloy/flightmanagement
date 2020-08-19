@@ -26,3 +26,5 @@ Flight Management is a little project that allows the toggling of flight, and ot
 - [ ] Add timed flight
 - [ ] Add multi-version support
 - [ ] Togglable toggle exemption
+
+Spigot Download: [Here](https://www.spigotmc.org/resources/flight-management.82867/ "Flight Management on SpigotMC")
