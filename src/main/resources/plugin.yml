@@ -1,8 +1,8 @@
 name: "FlightManagement"
 main: "ml.mackenziemolloy.flightmanagement.Main"
 author: "Mackenzie Molloy"
-version: "1.0"
-apt-version: "1.15"
+version: "1.0.2"
+api-version: "1.15"
 commands:
   fly:
     aliases: [flight, flightmanagement]

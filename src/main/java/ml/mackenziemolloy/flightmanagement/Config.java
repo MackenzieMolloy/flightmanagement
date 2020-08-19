@@ -36,6 +36,10 @@ public class Config implements SettingsHolder {
     public static final Property<String> MESSAGES_FLIGHT_ENABLED_OTHER =
             newProperty("messages.flight_enabled_other", "&fEnabled {player}'s flight");
 
+    @Comment("Message sent to player when they try to enabled another player's flight when it's already enabled")
+    public static final Property<String> MESSAGES_FLIGHT_ALREADY_ENABLED_OTHER =
+            newProperty("messages.flight_already_enabled_other", "&e{player}'s &fflight is already &aenabled&f!");
+
     @Comment("Message sent to player when they enabled another player's flight silently")
     public static final Property<String> MESSAGES_FLIGHT_ENABLED_OTHER_SILENT =
             newProperty("messages.flight_enabled_other_silent", "&7(SILENT) &fEnabled {player}'s flight");
@@ -47,6 +51,10 @@ public class Config implements SettingsHolder {
     @Comment("Message sent to player when they disabled another player's flight")
     public static final Property<String> MESSAGES_FLIGHT_DISABLED_OTHER =
             newProperty("messages.flight_disabled_other", "&fDisabled {player}'s flight");
+
+    @Comment("Message sent to player when they try to enabled another player's flight when it's already enabled")
+    public static final Property<String> MESSAGES_FLIGHT_ALREADY_DISABLED_OTHER =
+            newProperty("messages.flight_already_disabled_other", "&e{player}'s &fflight is already &cdisabled&f!");
 
     @Comment("Message sent to player when they disabled another player's flight silently")
     public static final Property<String> MESSAGES_FLIGHT_DISABLED_OTHER_SILENT =
