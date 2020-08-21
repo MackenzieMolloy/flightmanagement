@@ -14,7 +14,7 @@ public class Config implements SettingsHolder {
     // Sets-up all the needed configuration elements
     @Comment("Message sent to player when they don't provide any arguments")
     public static final Property<List<String>> MESSAGES_HELP =
-            newListProperty("messages.help", "&7", "&6&lFlight Management ([] - optional)", "&7", "&e/fly toggle [player] [-s]&f toggles your (or others) fly", "&e/fly on &f turns on your fly", "&e/fly off &fturns your fly off", "&e/fly check (username) &freturns player's flight state","&7");
+            newListProperty("messages.help", "&7", "&6&lFlight Management ([] - optional)", "&7", "&e/fly toggle [player] [-s]&f toggles your (or others) fly", "&e/fly on [player] [-s]&f turns on your fly", "&e/fly off [player] [-s]&fturns your fly off", "&e/fly check (username) &freturns player's flight state","&7");
 
     @Comment("Message sent to player when they don't have permission")
     public static final Property<String> MESSAGES_NO_PERMISSION =
