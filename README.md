@@ -22,7 +22,7 @@ Flight Management is a little project that allows the toggling of flight, and ot
 
 # To Do List
 - [ ] Re-organize permission handling (It's a bit of a mess)
-- [ ] Add other player option for **/flight on/off**
+- [x] Add other player option for **/flight on/off**
 - [ ] Add timed flight
 - [ ] Add multi-version support
 - [ ] Togglable toggle exemption
