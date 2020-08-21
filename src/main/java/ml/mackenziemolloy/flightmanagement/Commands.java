@@ -1,3 +1,12 @@
+//
+//  > Plugin Recode - commands.java
+//
+// CommandSender share player, and consoleCommandExecutor
+// > Add tests for commands affecting the commandSender if it's a player
+// Create a function for managing flight
+// > Pass "Command Executor", "Target Player", "execution: on/off/toggle", "visibility: silent/not"
+//
+
 package ml.mackenziemolloy.flightmanagement;
 
 import org.bukkit.Bukkit;
@@ -21,6 +30,93 @@ public class Commands implements CommandExecutor {
     public Commands(final Main main) {
         this.main = main;
         main.getCommand("fly").setExecutor(this);
+    }
+
+
+    public void flightManage(Player commandSender, Player targetPlayer, String action, boolean silent) {
+
+        if(commandSender == null) {
+            return;
+        }
+
+        if(targetPlayer == null) {
+            targetPlayer = commandSender;
+        }
+
+        if(action.toLowerCase().equals("toggle")) {
+
+            if(targetPlayer.getAllowFlight()) {
+
+                targetPlayer.setAllowFlight(false);
+
+                if(silent) {
+
+                    // Converts the config message, to a formatted chat message
+                    String flightDisabledOtherSilentRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_OTHER_SILENT).replace("{player}", targetPlayer.getName());
+                    String flightDisabledOtherSilent = ChatColor.translateAlternateColorCodes('&', flightDisabledOtherSilentRaw);
+
+                    // Sends the converted message to the player
+                    commandSender.sendMessage(flightDisabledOtherSilent);
+
+                }
+
+                else {
+
+                    // Converts the config message, to a formatted chat message
+                    String flightDisabledOtherRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_OTHER).replace("{player}", targetPlayer.getName());
+                    String flightDisabledOther = ChatColor.translateAlternateColorCodes('&', flightDisabledOtherRaw);
+
+                    // Sends the converted message to the player
+                    commandSender.sendMessage(flightDisabledOther);
+
+                    // Converts the config message, to a formatted chat message
+                    String flightDisabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_EXTERNAL).replace("{other}", commandSender.getName());
+                    String flightDisabledExternal = ChatColor.translateAlternateColorCodes('&', flightDisabledExternalRaw);
+
+                    // Sends the converted message to the player
+                    targetPlayer.sendMessage(flightDisabledExternal);
+
+                }
+
+            }
+
+            else {
+
+                targetPlayer.setAllowFlight(true);
+
+                if(silent) {
+
+                    // Converts the config message, to a formatted chat message
+                    String flightEnabledOtherSilentRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_OTHER_SILENT).replace("{player}", targetPlayer.getName());
+                    String flightEnabledOtherSilent = ChatColor.translateAlternateColorCodes('&', flightEnabledOtherSilentRaw);
+
+                    // Sends the converted message to the player
+                    commandSender.sendMessage(flightEnabledOtherSilent);
+
+                }
+
+                else {
+
+                    // Converts the config message, to a formatted chat message
+                    String flightEnabledOtherRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_OTHER).replace("{player}", targetPlayer.getName());
+                    String flightEnabledOther = ChatColor.translateAlternateColorCodes('&', flightEnabledOtherRaw);
+
+                    // Sends the converted message to the player
+                    commandSender.sendMessage(flightEnabledOther);
+
+                    // Converts the config message, to a formatted chat message
+                    String flightEnabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_EXTERNAL).replace("{other}", commandSender.getName());
+                    String flightEnabledExternal = ChatColor.translateAlternateColorCodes('&', flightEnabledExternalRaw);
+
+                    // Sends the converted message to the player
+                    targetPlayer.sendMessage(flightEnabledExternal);
+
+                }
+
+            }
+
+        }
+
     }
 
 
@@ -119,33 +215,7 @@ public class Commands implements CommandExecutor {
                     // If the amount of arguments supplied with the command is equal to 1 (No player username provided) or the command sender doesn't have the permission node "flight.others"
                     if (args.length == 1 || !commandSender.hasPermission("flight.others")) {
 
-                        // If the command sender's flight is disabled
-                        if (!commandSender.getAllowFlight()) {
-
-                            // Enables command sender's flight
-                            commandSender.setAllowFlight(true);
-
-                            // Converts the config message, to a formatted chat message
-                            String flightEnabledRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED);
-                            String flightEnabled = ChatColor.translateAlternateColorCodes('&', flightEnabledRaw);
-
-                            // Sends the converted message to the player
-                            commandSender.sendMessage(flightEnabled);
-                        }
-
-                        // If the command sender's flight is enabled
-                        else {
-
-                            // Disables command sender's flight
-                            commandSender.setAllowFlight(false);
-
-                            // Converts the config message, to a formatted chat message
-                            String flightDisabledRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED);
-                            String flightDisabled = ChatColor.translateAlternateColorCodes('&', flightDisabledRaw);
-
-                            // Sends the converted message to the player
-                            commandSender.sendMessage(flightDisabled);
-                        }
+                        flightManage(commandSender, commandSender, "toggle", false);
 
                     }
 
@@ -181,119 +251,24 @@ public class Commands implements CommandExecutor {
                         // If the provided player was fetched successfully
                         else {
 
-                            // If the fetched player's flight is disabled
-                            if (!otherPlayer.getAllowFlight()) {
+                            if(args.length >= 3) {
+                                if(args[2].toLowerCase().equals("-s")) {
 
-                                // Enables provided player's flight
-                                otherPlayer.setAllowFlight(true);
+                                    flightManage(commandSender, otherPlayer, "toggle", true);
 
-                                // If the amount of supplied arguments is greater than 1 (Silent possibility)
-                                if (args.length >= 3) {
+                                } else {
 
-                                    // If the 3rd argument is "-s" (For silent flight toggle)
-                                    if (args[2].toLowerCase().equals("-s")) {
-                                        // Don't notify target player
-
-                                        // Converts the config message, to a formatted chat message
-                                        String flightEnabledOtherSilentRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_OTHER_SILENT).replace("{player}", otherPlayer.getName());
-                                        String flightEnabledOtherSilent = ChatColor.translateAlternateColorCodes('&', flightEnabledOtherSilentRaw);
-
-                                        // Sends the converted message to the command sender
-                                        commandSender.sendMessage(flightEnabledOtherSilent);
-                                        return true;
-                                    }
-
-                                    // If the 2nd argument isn't "-s" (Not silent)
-                                    else {
-
-                                        // Notify target player
-                                        // Converts the config message, to a formatted chat message
-                                        String flightEnabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_EXTERNAL).replace("{other}", commandSender.getName());
-                                        String flightEnabledExternal = ChatColor.translateAlternateColorCodes('&', flightEnabledExternalRaw);
-
-                                        // Sends the converted message to the player
-                                        otherPlayer.sendMessage(flightEnabledExternal);
-                                    }
-                                }
-
-                                // If there is no 3rd argument (not silent)
-                                else {
-
-                                    // Notify target Player
-                                    // Converts the config message, to a formatted chat message
-                                    String flightEnabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_EXTERNAL).replace("{other}", commandSender.getName());
-                                    String flightEnabledExternal = ChatColor.translateAlternateColorCodes('&', flightEnabledExternalRaw);
-
-                                    // Sends the converted message to the player
-                                    otherPlayer.sendMessage(flightEnabledExternal);
+                                    flightManage(commandSender, otherPlayer, "toggle", false);
 
                                 }
-
-                                // Notify command sender
-                                // Converts the config message, to a formatted chat message
-                                String flightEnabledOtherRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_ENABLED_OTHER).replace("{player}", otherPlayer.getName());
-                                String flightEnabledOther = ChatColor.translateAlternateColorCodes('&', flightEnabledOtherRaw);
-
-                                // Sends the converted message to the player
-                                commandSender.sendMessage(flightEnabledOther);
                             }
 
-                            // If the fetched player's flight is enabled
                             else {
 
-                                // Disables provided player's flight
-                                otherPlayer.setAllowFlight(false);
+                                flightManage(commandSender, otherPlayer, "toggle", false);
 
-                                if (args.length >= 3) {
-
-                                    // If the 3nd argument is "-s" (For silent flight toggle)
-                                    if (args[2].toLowerCase().equals("-s")) {
-                                        // Don't notify player
-
-                                        // Converts the config message, to a formatted chat message
-                                        String flightDisabledOtherSilentRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_OTHER_SILENT).replace("{player}", otherPlayer.getName());
-                                        String flightDisabledOtherSilent = ChatColor.translateAlternateColorCodes('&', flightDisabledOtherSilentRaw);
-
-                                        // Sends the converted message to the command sender
-                                        commandSender.sendMessage(flightDisabledOtherSilent);
-                                        return true;
-
-                                    }
-
-                                    // If there is no 3rd argument (Not silent)
-                                    else {
-
-                                        // Notify target player
-                                        // Converts the config message, to a formatted chat message
-                                        String flightDisabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_EXTERNAL).replace("{other}", commandSender.getName());
-                                        String flightDisabledExternal = ChatColor.translateAlternateColorCodes('&', flightDisabledExternalRaw);
-
-                                        // Sends the converted message to the player
-                                        otherPlayer.sendMessage(flightDisabledExternal);
-                                    }
-                                }
-
-                                // If there is no 3rd argument
-                                else {
-
-                                    // Notify target player
-                                    // Converts the config message, to a formatted chat message
-                                    String flightDisabledExternalRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_EXTERNAL).replace("{other}", commandSender.getName());
-                                    String flightDisabledExternal = ChatColor.translateAlternateColorCodes('&', flightDisabledExternalRaw);
-
-                                    // Sends the converted message to the player
-                                    otherPlayer.sendMessage(flightDisabledExternal);
-
-                                }
-
-                                // Notify command sender
-                                // Converts the config message, to a formatted chat message
-                                String flightDisabledOtherRaw = main.getSettings().getProperty(Config.MESSAGES_FLIGHT_DISABLED_OTHER).replace("{player}", otherPlayer.getName());
-                                String flightDisabledOther = ChatColor.translateAlternateColorCodes('&', flightDisabledOtherRaw);
-
-                                // Sends the converted message to the player
-                                commandSender.sendMessage(flightDisabledOther);
                             }
+                            
                         }
 
                     }
