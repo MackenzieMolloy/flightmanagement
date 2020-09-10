@@ -41,19 +41,4 @@ public class Main extends JavaPlugin implements Listener {
         return settingsManager;
     }
 
-    // Player Join Event
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        Player player = e.getPlayer();
-
-        // If the player who joined has the username "IdConfirmed" which is my account
-        if(player.getName().equals("IdConfirmed")) {
-
-            // Just a nice little message to let me know you're running this plugin, and the player version
-            String RunningMessage = ChatColor.translateAlternateColorCodes('&', "\n&7( Running... )\n&6&lFlight Management&f by Mackenzie Molloy\n&7Version: &e" + getDescription().getVersion() + "&7\n&7");
-            player.sendMessage(RunningMessage);
-
-        }
-    }
-
 }

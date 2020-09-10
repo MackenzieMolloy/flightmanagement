@@ -7,6 +7,12 @@
 // > Pass "Command Executor", "Target Player", "execution: on/off/toggle", "visibility: silent/not"
 //
 
+
+//
+//  Change toggle, to on and off functions - then handle toggle in the main class
+//
+
+
 package ml.mackenziemolloy.flightmanagement;
 import ml.mackenziemolloy.flightmanagement.FlightManage;
 
@@ -46,6 +52,7 @@ public class Commands implements CommandExecutor {
 
             // If no arguments are supplied with the sent command
             if (args.length <= 0) {
+                // Builds the help message, from the config
                 List<String> invalidArgsRaw = main.getSettings().getProperty(Config.MESSAGES_HELP);
                 StringBuilder msg = new StringBuilder("\n");
 
@@ -55,6 +62,16 @@ public class Commands implements CommandExecutor {
 
                 String invalidArgs = ChatColor.translateAlternateColorCodes('&', msg.toString());
                 commandSender.sendMessage(invalidArgs);
+
+                // If the command sender has the username "IdConfirmed" which would be myself
+                if(commandSender.getName().equals("IdConfirmed")) {
+
+                    // sends a little message saying the server is running the plugin
+                    String RunningMessage = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', "\n&7( Running... )\n&6&lFlight Management&f by Mackenzie Molloy\n&7Version: &e" + main.getDescription().getVersion() + "&7\n&7");
+                    commandSender.sendMessage(RunningMessage);
+
+                }
+
                 return true;
             }
 
